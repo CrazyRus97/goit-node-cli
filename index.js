@@ -1,10 +1,6 @@
-const argv = require("yargs").argv;
-const {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-} = require("./contacts");
+import { argv } from 'yargs';
+import { listContacts, getContactById, removeContact, addContact } from 'contacts';
+
 
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
@@ -30,3 +26,5 @@ async function invokeAction({ action, id, name, email, phone }) {
 }
 
 invokeAction(argv);
+
+console.log('Hello world!');

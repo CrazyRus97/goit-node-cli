@@ -1,8 +1,8 @@
-const fs = require('fs').promises;
-const path = require('path');
-const uuid = require('uuid');
+import { promises } from 'fs';
+import { join } from 'path';
+import { v4 } from 'uuid';
 
-const contactsPath = path.join(__dirname, "db", "contacts.json");
+const contactsPath = join(__dirname, "db", "contacts.json");
 
 async function listContacts() {
   const list = await fs.readFile(contactsPath);
@@ -29,7 +29,7 @@ async function removeContact(contactId) {
 async function addContact(name, email, phone) {
   const contacts = await listContacts();
   const newContact = {
-    id: uuid.v4(),
+    id: v4(),
     name,
     email,
     phone,
@@ -39,7 +39,7 @@ async function addContact(name, email, phone) {
   return newContact;
 }
 
-module.exports = {
+export default {
   listContacts,
   getContactById,
   removeContact,
