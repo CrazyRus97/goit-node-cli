@@ -1,18 +1,18 @@
-import { promises } from 'fs';
-import { join } from 'path';
-import { v4 } from 'uuid';
+const fs = require("node:fs/promises");
+const path = require("node:path");
+const v4 = require("uuid").v4;
 
-const contactsPath = join(__dirname, "db", "contacts.json");
+const contactsPath = path.join(__dirname, "db", "contacts.json");
 
 async function listContacts() {
-  const list = await fs.readFile(contactsPath);
-  return JSON.parse(list);
+  const data = await fs.readFile(contactsPath);
+  return JSON.parse(data);
 }
 
 async function getContactById(contactId) {
   const contacts = await listContacts();
-  const exactContact = contacts.find((item) => item.id === contactId);
-  return exactContact || null;
+  const result = contacts.find((item) => item.id === contactId);
+  return result || null;
 }
 
 async function removeContact(contactId) {
@@ -26,8 +26,9 @@ async function removeContact(contactId) {
   return result;
 }
 
-async function addContact(name, email, phone) {
+async function addContact({ name, email, phone }) {
   const contacts = await listContacts();
+
   const newContact = {
     id: v4(),
     name,
@@ -39,7 +40,7 @@ async function addContact(name, email, phone) {
   return newContact;
 }
 
-export default {
+module.exports = {
   listContacts,
   getContactById,
   removeContact,
